@@ -25,12 +25,17 @@ import org.apache.ibatis.logging.Log;
 import org.apache.ibatis.logging.LogFactory;
 
 /**
- * The 2nd level cache transactional buffer.
+ * The 2nd level cache transactional buffer.2级缓存事务缓冲区
  * <p>
  * This class holds all cache entries that are to be added to the 2nd level cache during a Session.
  * Entries are sent to the cache when commit is called or discarded if the Session is rolled back.
  * Blocking cache support has been added. Therefore any get() that returns a cache miss
  * will be followed by a put() so any lock associated with the key can be released.
+ * 这个类保留着所有在对话期间被添加到二级缓存的缓存数据。缓存数据在事务提交后会被传入二级缓存中，或者在事务会话回退后被丢弃。
+ * 阻塞着已经添加缓存的缓存数据，因此任何get()方法返回出来的缓存丢失，会随后将由put(),所以任何的和对应的key关联的锁可以被释放掉。
+ * <p>
+ * 事务缓存，在提交的时候，才真正的放到Cache中，或者回滚的时候清除掉，对Cache没有影响
+ * </p>
  *
  * @author Clinton Begin
  * @author Eduardo Macarron
@@ -128,7 +133,7 @@ public class TransactionalCache implements Cache {
         delegate.removeObject(entry);
       } catch (Exception e) {
         log.warn("Unexpected exception while notifying a rollback to the cache adapter. "
-            + "Consider upgrading your cache adapter to the latest version. Cause: " + e);
+          + "Consider upgrading your cache adapter to the latest version. Cause: " + e);
       }
     }
   }

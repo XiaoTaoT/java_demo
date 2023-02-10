@@ -25,6 +25,11 @@ import org.apache.ibatis.cache.Cache;
 /**
  * Soft Reference cache decorator
  * Thanks to Dr. Heinz Kabutz for his guidance here.
+ * 软引用回收策略 缓存装饰类
+ * <p>
+ * 软引用只有当内存不足时才会被垃圾收集器回收。这里的实现机制中，使用了一个链表来保证一定数量的值即使内存不足也不会被回收，
+ * 但是没有保存在该链表的值则有可能会被回收
+ * </p>
  *
  * @author Clinton Begin
  */

@@ -21,6 +21,10 @@ import org.apache.ibatis.cache.Cache;
 
 /**
  * @author Clinton Begin
+ * 定时清空Cache，但是并没有开始一个定时任务，而是在使用Cache的时候，才去检查时间是否到了。
+ * <p>
+ * 参考博客：<a href='https://www.cnblogs.com/jabnih/p/5705640.html'>https://www.cnblogs.com/jabnih/p/5705640.html</a>
+ * </p>
  */
 public class ScheduledCache implements Cache {
 

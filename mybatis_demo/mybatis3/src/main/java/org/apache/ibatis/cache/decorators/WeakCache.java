@@ -25,6 +25,12 @@ import org.apache.ibatis.cache.Cache;
 /**
  * Weak Reference cache decorator.
  * Thanks to Dr. Heinz Kabutz for his guidance here.
+ * <p>
+ * 弱引用回收策略 缓存装饰类，逻辑和{@link SoftCache}非常类似。就直接看{@link SoftCache}逻辑算了，我懒得写了
+ * </p>
+ * <p>
+ * 弱引用的对象一旦被垃圾收集器发现，则会被回收，无论内存是否足够
+ * </p>
  *
  * @author Clinton Begin
  */

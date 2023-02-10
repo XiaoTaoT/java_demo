@@ -31,6 +31,13 @@ import org.apache.ibatis.io.SerialFilterChecker;
 
 /**
  * @author Clinton Begin
+ * 序列化功能，将值序列化后存到缓存中。该功能用于缓存返回一份实例的Copy，用于保存线程安全。
+ * <p>
+ * 该缓存只是保存在内存里
+ * </p>
+ * <p>
+ * 参考博客：<a href='https://www.cnblogs.com/jabnih/p/5705640.html'>https://www.cnblogs.com/jabnih/p/5705640.html</a>
+ * </p>
  */
 public class SerializedCache implements Cache {
 
@@ -87,7 +94,7 @@ public class SerializedCache implements Cache {
 
   private byte[] serialize(Serializable value) {
     try (ByteArrayOutputStream bos = new ByteArrayOutputStream();
-        ObjectOutputStream oos = new ObjectOutputStream(bos)) {
+         ObjectOutputStream oos = new ObjectOutputStream(bos)) {
       oos.writeObject(value);
       oos.flush();
       return bos.toByteArray();
@@ -100,7 +107,7 @@ public class SerializedCache implements Cache {
     SerialFilterChecker.check();
     Serializable result;
     try (ByteArrayInputStream bis = new ByteArrayInputStream(value);
-        ObjectInputStream ois = new CustomObjectInputStream(bis)) {
+         ObjectInputStream ois = new CustomObjectInputStream(bis)) {
       result = (Serializable) ois.readObject();
     } catch (Exception e) {
       throw new CacheException("Error deserializing object.  Cause: " + e, e);
